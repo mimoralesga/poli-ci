@@ -150,8 +150,8 @@ body {
   padding-inline: 0.5rem;
 }
 
-.inline-block {
-  display: inline-block;
+.inline-flex {
+  display: inline-flex;
 }
 
 .ml-2 {
@@ -173,4 +173,10 @@ body {
 .input:focus {
   outline: none;
   border: none;
+}
+
+.lucide {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.2rem;
 }
