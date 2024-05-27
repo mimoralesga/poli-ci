@@ -10,22 +10,167 @@
       format("woff");
 }
 
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-500-normal.woff2)
+      format("woff2"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-500-normal.woff)
+      format("woff");
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-700-normal.woff2)
+      format("woff2"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-700-normal.woff)
+      format("woff");
+}
+:root {
+  --foreground: 240 10% 3.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --radius: 0.5rem;
+  --muted: 240 4.8% 95.9%;
+  --border: 240 5.9% 90%;
+  --background: 0 0% 100%;
+  --accent-foreground: 240 5.9% 10%;
+  --accent: 240 4.8% 95.9%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+}
+
+* {
+  border-color: (var(--border));
+  border: 0 solid #e5e7eb;
+}
+
 body {
   font-family: "Geist Sans", sans-serif;
+  color: hsl(var(--foreground));
 }
 
 .container {
+  width: 32rem;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: hsl(var(--muted-foreground));
+}
+
+.table-section {
+  border-width: 1px;
+  border-radius: calc(var(--radius) - 2px);
+  width: 100%;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.table-head {
+  border-bottom-width: 1px;
+}
+
+.table-row {
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+}
+
+.table-row:hover {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+.table-head > tr:not(:last-child) {
+  border-bottom-width: 1px;
+}
+
+.table-header {
+  color: hsl(var(--muted-foreground));
+  vertical-align: middle;
+  text-align: left;
+  padding-left: 0.5rem;
+  height: 2.5rem;
+  font-weight: 500;
+}
+
+.table-body > tr:not(:last-child) {
+  border-bottom-width: 1px;
+}
+
+.table-data {
+  padding: 0.5rem;
+}
+
+.button {
+  display: flex;
+  border-radius: calc(var(--radius) - 2px);
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  cursor: pointer;
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
   width: 100%;
 }
 
-.mx-auto {
+.button:hover {
+  background-color: hsl(var(--secondary) / 0.8);
+  color: hsl(var(--secondary-foreground));
 }
 
-@media (width <= 1250px) {
-  .container {
-    width: 100%;
-  }
+.button-small {
+  width: auto;
+  height: 1.5rem;
+  padding-inline: 0.5rem;
+}
 
-  .mx-auto {
-  }
+.inline-block {
+  display: inline-block;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.button-section {
+  padding: 0.5rem;
+}
+
+.input {
+  background-color: transparent;
+  width: 100%;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.input:focus {
+  outline: none;
+  border: none;
 }

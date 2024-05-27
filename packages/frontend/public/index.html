@@ -7,8 +7,29 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h2>Welcome back!</h2>
-    <p>Here's a list of your tasks for this month!</p>
+    <main class="container">
+      <h2 class="title">Bienvenido de nuevo!</h2>
+      <p class="subtitle">
+        Aquí tienes una lista de tus tareas para esta semana!
+      </p>
+      <section class="table-section">
+        <table class="table">
+          <thead class="table-head">
+            <tr class="table-row">
+              <th class="table-header">
+                <input id="all-items" type="checkbox" />
+              </th>
+              <th id="table-header-title" class="table-header">Título</th>
+            </tr>
+          </thead>
+          <tbody id="table-body" class="table-body"></tbody>
+        </table>
+        <div class="button-section">
+          <button id="new" class="button">Nueva tarea</button>
+        </div>
+      </section>
+    </main>
+
     <script src="/scripts.js"></script>
   </body>
 </html>
