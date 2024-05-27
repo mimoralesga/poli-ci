@@ -13,9 +13,10 @@ services:
   backend:
     build: ./packages/backend
     ports:
-      - "3001:3001"
+      - "4000:4000"
     volumes:
       - ./packages/backend:/app
+      - /app/node_modules
     depends_on:
       - database
     environment:
@@ -23,6 +24,7 @@ services:
       - DB_USER=myuser
       - DB_PASSWORD=mypassword
       - DB_NAME=mydatabase
+    command: npm start
 
   database:
     build: ./packages/database
