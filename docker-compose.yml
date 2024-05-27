@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   frontend:
@@ -24,7 +24,7 @@ services:
       - DB_PASSWORD=mypassword
       - DB_NAME=mydatabase
 
-  database  :
+  database:
     build: ./packages/database
     ports:
       - "5432:5432"
