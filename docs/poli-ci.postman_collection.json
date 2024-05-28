@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "d411e51a-7136-41c7-9bd5-d94cae5528a5",
+		"name": "poli-ci",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10630483"
+	},
+	"item": [
+		{
+			"name": "GET get the todo lists",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/todos",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1716856200000\",\n    \"title\": \"Trate de calcular la alimentación EXE, tal vez se indexará el píxel de varios bytes!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/todos",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"todos"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete tasks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"1716856200000\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/todos/complete",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"todos",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
