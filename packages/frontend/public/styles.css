@@ -86,7 +86,7 @@ body {
   text-indent: 0;
   border-color: inherit;
   border-collapse: collapse;
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 .table-head {
@@ -179,4 +179,8 @@ body {
   height: 1rem;
   width: 1rem;
   margin-right: 0.2rem;
+}
+
+.table-checkbox {
+  width: 1.25rem;
 }

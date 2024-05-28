@@ -20,7 +20,7 @@ function render() {
     $input.type = "text";
 
     const $cell1 = document.createElement("td");
-    $cell1.className = "table-data";
+    $cell1.className = "table-data table-checkbox";
     $cell1.appendChild($checkbox);
     $row.appendChild($cell1);
 
