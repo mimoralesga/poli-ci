@@ -16,6 +16,15 @@ async function addTodo(task) {
   return tasks;
 }
 
+async function updateTodo(id, task) {
+  const updatedTask = await sql`
+    UPDATE tasks SET ${sql(task, "title")}
+    WHERE tasks.id = ${id};
+  `;
+
+  return updatedTask;
+}
+
 async function completeTodo(ids) {
   const tasks = await sql`
     UPDATE tasks SET "done" = true FROM (VALUES ${sql(ids)}) AS update_data (id)
@@ -29,4 +38,5 @@ module.exports = {
   addTodo,
   completeTodo,
   getTodos,
+  updateTodo,
 };

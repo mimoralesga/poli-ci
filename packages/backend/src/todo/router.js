@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getTodos, addTodo, completeTodo } = require("./services");
+const { getTodos, addTodo, completeTodo, updateTodo } = require("./services");
 
 router.get("/", async (_, res) => {
   const tasks = await getTodos();
@@ -17,6 +17,15 @@ router.post("/", (req, res) => {
   });
 
   res.status(201).json(task);
+});
+
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  const task = req.body;
+
+  const updatedTodo = await updateTodo(id, task);
+
+  res.status(200).json(updatedTodo);
 });
 
 router.post("/complete", async (req, res) => {

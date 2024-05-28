@@ -1,12 +1,4 @@
-let tasks = [
-  {
-    id: Date.now().toString(),
-    title:
-      "Trate de calcular la alimentación EXE, tal vez se indexará el píxel de varios bytes!",
-    editable: false,
-    selected: false,
-  },
-];
+let tasks = [];
 
 const $tbody = document.getElementById("table-body");
 const $new = document.getElementById("new");
@@ -47,27 +39,20 @@ function render() {
 
     $tbody.appendChild($row);
 
-    $checkbox.addEventListener("change", () => {
-      const id = $cell2.getAttribute("data-id");
-      const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
-      tasks[taskIndex].selected = !tasks[taskIndex].selected;
-      render();
-    });
+    $checkbox.addEventListener("change", () => handleOnCheckboxChange($cell2));
 
-    $cell2.addEventListener("click", (event) => {
-      const id = event.target.getAttribute("data-id");
-      const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
-      tasks[taskIndex].editable = true;
-      $checkbox.innerHTML = "";
-      render();
-    });
+    $cell2.addEventListener("click", (event) =>
+      handleOnCellClick($checkbox, event),
+    );
 
     $input.focus();
 
-    $input.addEventListener("blur", (event) => handleOnBlur($cell2, event));
+    $input.addEventListener("blur", (event) =>
+      handleOnInputBlur($cell2, event),
+    );
 
     $input.addEventListener("keydown", (event) =>
-      handleOnKeyDown($input, event),
+      handleOnInputKeyDown($input, event),
     );
   });
 
@@ -89,30 +74,64 @@ function render() {
       $all.checked = true;
     }
 
-    $complete.addEventListener("click", () => {
-      tasks = tasks.filter((task) => !task.selected);
-      render();
-    });
+    $complete.addEventListener("click", handleOnCompleteClick);
   } else {
     $header.textContent = "Título";
     $all.checked = false;
   }
 }
 
-function handleOnBlur($cell2, event) {
-  const value = event.target.value;
-  if (value === "") {
-    tasks.pop();
-  } else {
-    const id = $cell2.getAttribute("data-id");
-    const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
-    tasks[taskIndex].editable = false;
-    tasks[taskIndex].title = value;
-  }
+$new.addEventListener("click", handleOnNewClick);
+
+$all.addEventListener("change", handleOnAllChange);
+
+function handleOnCheckboxChange($cell2) {
+  const id = $cell2.getAttribute("data-id");
+  const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
+  tasks[taskIndex].selected = !tasks[taskIndex].selected;
   render();
 }
 
-function handleOnKeyDown($input, event) {
+function handleOnCellClick($checkbox, event) {
+  const id = event.target.getAttribute("data-id");
+  const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
+  tasks[taskIndex].editable = true;
+  $checkbox.innerHTML = "";
+  render();
+}
+
+function handleOnInputBlur($cell2, event) {
+  const value = event.target.value;
+  if (value === "") {
+    tasks.pop();
+    render();
+  } else {
+    const id = $cell2.getAttribute("data-id");
+    const taskIndex = tasks.findIndex((tsk) => tsk.id === id);
+    const task = tasks[taskIndex];
+    task.title = value;
+
+    if (task.new) {
+      addTodo(task).then((response) => {
+        if (response.ok) {
+          task.editable = false;
+          task.new = false;
+          render();
+        }
+      });
+    } else {
+      updateTodo(task).then((response) => {
+        if (response.ok) {
+          task.editable = false;
+          task.new = false;
+          render();
+        }
+      });
+    }
+  }
+}
+
+function handleOnInputKeyDown($input, event) {
   const value = event.target.value;
 
   if (event.key === "Enter") {
@@ -128,20 +147,75 @@ function handleOnKeyDown($input, event) {
   }
 }
 
-$new.addEventListener("click", () => {
+function handleOnNewClick() {
   tasks.push({
     id: Date.now().toString(),
     title: "",
     editable: true,
+    new: true,
   });
   render();
-});
+}
 
-$all.addEventListener("change", (event) => {
+function handleOnAllChange(event) {
   tasks.map((task) => {
     task.selected = event.target.checked;
   });
   render();
-});
+}
 
-render();
+function handleOnCompleteClick() {
+  const ids = tasks.filter((task) => task.selected).map((task) => task.id);
+  completeTodos(ids).then((response) => {
+    if (response.ok) {
+      getTodos().then((data) => {
+        tasks = data;
+        render();
+      });
+    }
+  });
+}
+
+async function getTodos() {
+  return fetch("http://localhost:4000/todos", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json());
+}
+
+async function updateTodo(task) {
+  return fetch(`http://localhost:4000/todos/${task.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+}
+
+async function completeTodos(ids) {
+  return fetch("http://localhost:4000/todos/complete", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(ids),
+  });
+}
+
+async function addTodo(task) {
+  return fetch("http://localhost:4000/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+}
+
+getTodos().then((data) => {
+  tasks = data;
+  render();
+});
