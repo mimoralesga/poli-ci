@@ -1,34 +1,29 @@
 const express = require("express");
 const router = express.Router();
+const { getTodos, addTodo, completeTodo } = require("./services");
 
-let tasks = [
-  {
-    id: Date.now().toString(),
-    title:
-      "Trate de calcular la alimentación EXE, tal vez se indexará el píxel de varios bytes!",
-    competed: false,
-  },
-];
+router.get("/", async (_, res) => {
+  const tasks = await getTodos();
 
-router.get("/", (req, res) => {
   res.json(tasks);
 });
 
 router.post("/", (req, res) => {
   const task = req.body;
 
-  tasks.push({
+  addTodo({
     ...task,
-    completed: false,
+    done: false,
   });
 
   res.status(201).json(task);
 });
 
-router.post("/complete", (req, res) => {
+router.post("/complete", async (req, res) => {
   const ids = req.body;
+  const mapIds = ids.map((id) => [id]);
 
-  tasks = tasks.filter((task) => !ids.includes(task.id));
+  await completeTodo(mapIds);
 
   res.status(204).json();
 });

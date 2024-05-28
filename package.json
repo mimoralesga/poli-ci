@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@changesets/cli": "^2.27.3"
+    "@changesets/cli": "^2.27.3",
+    "postgres": "^3.4.4"
   },
   "devDependencies": {
     "prettier": "3.2.5"
