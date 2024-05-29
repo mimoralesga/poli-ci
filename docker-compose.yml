@@ -9,7 +9,8 @@ services:
       - ./packages/frontend/public:/usr/share/nginx/html
     depends_on:
       - backend
-
+    networks:
+      - task
   backend:
     build: ./packages/backend
     ports:
@@ -20,6 +21,9 @@ services:
     depends_on:
       - database
     
+    command: npm start
+    networks:
+      - task
   database:
     build: ./packages/database
     ports:
@@ -30,6 +34,11 @@ services:
       - POSTGRES_DB=mydatabase
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
+    networks:
+      - task
 
 volumes:
   db_data:
+
+networks:
+  task:
