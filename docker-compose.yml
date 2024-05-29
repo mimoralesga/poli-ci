@@ -19,12 +19,7 @@ services:
       - /app/node_modules
     depends_on:
       - database
-    environment:
-      - DB_HOST=db
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_NAME=mydatabase
-    command: npm start
+    
 
   database:
     build: ./packages/database
