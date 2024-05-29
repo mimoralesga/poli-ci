@@ -4,7 +4,7 @@ services:
   frontend:
     build: ./packages/frontend
     ports:
-      - "3000:80"
+      - "3000:8080"
     volumes:
       - ./packages/frontend/public:/usr/share/nginx/html
     depends_on:
