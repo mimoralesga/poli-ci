@@ -15,7 +15,8 @@ pipeline {
           steps {
             script {
               dir('frontend') {
-                sh 'docker build -d frontend:latest .'
+                echo 'building the frontend...'
+                sh 'npm install'
               }
             }
           }
@@ -25,17 +26,8 @@ pipeline {
           steps {
             script {
               dir('backend') {
-                sh 'docker build -d backend:latest .'
-              }
-            }
-          }
-        }
-
-        stage('database') {
-          steps {
-            script {
-              dir('database') {
-                sh 'docker build -d database:latest .'
+                echo 'building the backend...'
+                sh 'npm install'
               }
             }
           }
@@ -46,6 +38,7 @@ pipeline {
     stage('deploy') {
       steps {
         script {
+          echo 'deploying the application...'
           sh 'docker-compose up -d'
         }
       }
