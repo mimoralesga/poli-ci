@@ -9,7 +9,6 @@ pipeline {
   stages {
     stage("prepare") {
       steps {
-        git "https://github.com/mimoralesga/poli-ci"
         sh "npm --version"
       }
     }
