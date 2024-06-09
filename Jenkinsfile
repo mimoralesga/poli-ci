@@ -2,10 +2,15 @@ pipeline {
 
   agent any
 
+  tools {
+    nodejs '22.2.0'
+  }
+
   stages {
-    stage("checkout") {
+    stage("prepare") {
       steps {
         git "https://github.com/mimoralesga/poli-ci"
+        sh "npm --version"
       }
     }
 
