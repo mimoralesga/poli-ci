@@ -7,6 +7,15 @@ pipeline {
   }
 
   stages {
+    stage("prepare") {
+      steps {
+        script {
+          sh "node --version"
+          sh "npm --version"
+        }
+      }
+    }
+
     stage("build") {
       parallel {
         stage("frontend") {
