@@ -7,12 +7,6 @@ pipeline {
   }
 
   stages {
-    stage("prepare") {
-      steps {
-        sh "npm --version"
-      }
-    }
-
     stage("build") {
       parallel {
         stage("frontend") {
@@ -39,11 +33,36 @@ pipeline {
       }
     }
 
+    stage("test") {
+      parallel {
+        stage("frontend") {
+          steps {
+            script {
+              dir("packages/frontend") {
+                echo "testing the frontend..."
+                sh "npm test"
+              }
+            }
+          }
+        }
+
+        stage("backend") {
+          steps {
+            script {
+              dir("packages/backend") {
+                echo "testing the backend..."
+                sh "npm test"
+              }
+            }
+          }
+        }
+      }
+    }
+
     stage("deploy") {
       steps {
         script {
           echo "deploying the application..."
-          sh "docker-compose up -d"
         }
       }
     }
