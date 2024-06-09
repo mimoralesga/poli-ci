@@ -6,43 +6,26 @@ node {
     stage("checkout") {
       steps {
         git "https://github.com/mimoralesga/poli-ci"
-        sh "node --version"
       }
     }
 
-    stage("build") {
-      parallel {
-        stage("frontend") {
-          steps {
-            script {
-              dir("packages/frontend") {
-                echo "building the frontend..."
-                sh "npm install"
-              }
+    stage("A"){
+        steps{
+            echo "====++++executing A++++===="
+            sh "node --version"
+        }
+        post{
+            always{
+                echo "====++++always++++===="
             }
-          }
-        }
-
-        stage("backend") {
-          steps {
-            script {
-              dir("packages/backend") {
-                echo "building the backend..."
-                sh "npm install"
-              }
+            success{
+                echo "====++++A executed successfully++++===="
             }
-          }
+            failure{
+                echo "====++++A execution failed++++===="
+            }
+    
         }
-      }
-    }
-
-    stage("deploy") {
-      steps {
-        script {
-          echo "deploying the application..."
-          sh "docker-compose up -d"
-        }
-      }
     }
   }
 }
