@@ -1,6 +1,6 @@
 pipeline {
-  agent any
 
+  agent any
 
   stages {
     stage('checkout') {
@@ -14,7 +14,7 @@ pipeline {
         stage('frontend') {
           steps {
             script {
-              dir('frontend') {
+              dir('packages/frontend') {
                 echo 'building the frontend...'
                 sh 'npm install'
               }
@@ -25,7 +25,7 @@ pipeline {
         stage('backend') {
           steps {
             script {
-              dir('backend') {
+              dir('packages/backend') {
                 echo 'building the backend...'
                 sh 'npm install'
               }
