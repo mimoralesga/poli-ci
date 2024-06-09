@@ -3,31 +3,32 @@ pipeline {
   agent any
 
   stages {
-    stage('checkout') {
+    stage("checkout") {
       steps {
-        git 'https://github.com/mimoralesga/poli-ci'
+        git "https://github.com/mimoralesga/poli-ci"
+        sh "node --version"
       }
     }
 
-    stage('build') {
+    stage("build") {
       parallel {
-        stage('frontend') {
+        stage("frontend") {
           steps {
             script {
-              dir('packages/frontend') {
-                echo 'building the frontend...'
-                sh 'npm install'
+              dir("packages/frontend") {
+                echo "building the frontend..."
+                sh "npm install"
               }
             }
           }
         }
 
-        stage('backend') {
+        stage("backend") {
           steps {
             script {
-              dir('packages/backend') {
-                echo 'building the backend...'
-                sh 'npm install'
+              dir("packages/backend") {
+                echo "building the backend..."
+                sh "npm install"
               }
             }
           }
@@ -35,11 +36,11 @@ pipeline {
       }
     }
 
-    stage('deploy') {
+    stage("deploy") {
       steps {
         script {
-          echo 'deploying the application...'
-          sh 'docker-compose up -d'
+          echo "deploying the application..."
+          sh "docker-compose up -d"
         }
       }
     }
