@@ -4,13 +4,14 @@ services:
   frontend:
     build: ./packages/frontend
     ports:
-      - "8080:80"
+      - "3000:80"
     volumes:
       - ./packages/frontend/public:/usr/share/nginx/html
     depends_on:
       - backend
     networks:
       - task
+
   backend:
     build: ./packages/backend
     ports:
@@ -20,11 +21,10 @@ services:
       - /app/node_modules
     depends_on:
       - database
-    
-    
     command: npm start
     networks:
       - task
+
   database:
     build: ./packages/database
     ports:
@@ -37,9 +37,6 @@ services:
       - POSTGRES_PASSWORD=mypassword
     networks:
       - task
-
-volumes:
-  db_data:
 
 networks:
   task:
