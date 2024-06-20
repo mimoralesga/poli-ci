@@ -1,0 +1,13 @@
+language: minimal
+
+services:
+  - docker
+
+before_install:
+  - docker-compose -f docker-compose.yml up --build -d
+
+script:
+  - docker-compose -f docker-compose.yml run backend npm test
+
+after_script:
+  - docker-compose -f docker-compose.yml down

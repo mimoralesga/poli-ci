@@ -1,4 +1,5 @@
 # poli-ci
+[![Build Status](https://travis-ci.com/mimoralesga/poli-ci.svg?branch=main)](https://travis-ci.com/mimoralesga/poli-ci)
 
 
 ***Aplicación en Node.Js***
