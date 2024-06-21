@@ -17,10 +17,10 @@ jobs:
         run: npm install
       - name: build
         uses: docker://node:21-alpine3.19
-        run: npm run build
+        run: npm run build --ws
       - name: test
         uses: docker://node:21-alpine3.19
-        run: npm run test
+        run: npm run test --ws
       - name: scan
         uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v2
         with:
