@@ -7,6 +7,9 @@
     "start": "docker-compose up --build -d",
     "stop": "docker-compose down -v"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
