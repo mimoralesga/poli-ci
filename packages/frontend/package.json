@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "echo \"Successfully builded\"",
     "test": "echo \"Successfully tested\""
   },
   "keywords": [],

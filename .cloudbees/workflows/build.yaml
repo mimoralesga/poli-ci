@@ -8,24 +8,20 @@ on:
       - '**'
 
 jobs:
-  build-and-test:
+  js-build:
     steps:
       - name: checkout
         uses: cloudbees-io/checkout@v1
-      
-      - name: set up Docker Compose
-        uses: cloudbees-io/docker-compose@v1
-        run: docker-compose -f docker-compose.yml up --build -d
-      
-      - name: run backend tests
-        uses: cloudbees-io/docker-compose@v1
-        run: docker-compose -f docker-compose.yml run backend npm test
-      
-      - name: tear down Docker Compose
-        uses: cloudbees-io/docker-compose@v1
-        run: docker-compose -f docker-compose.yml down
-      
-      - name: sonarqube scan
+      - name: get dependencies
+        uses: docker://node:21-alpine3.19
+        run: npm install
+      - name: build
+        uses: docker://node:21-alpine3.19
+        run: npm run build
+      - name: test
+        uses: docker://node:21-alpine3.19
+        run: npm run test
+      - name: scan
         uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v2
         with:
-          language: js
+          language: LANGUAGE_JS
