@@ -17,4 +17,4 @@
 - Se crea el archivo `Jenkinsfile` con la configuración necesaria para realizar el despligue del proyecto.
 - Se crean cuatro diferentes etapas: prepare, build, test y deploy.
 - Se crea un pipeline llamado `poli-ci` que clonara el repo del proyecto y utilizara el archivo de configuiración del pipeline.
-- Se crea un webhook en el repo de github para que cada vez que se cree un evento en el repo se notifique a jenkins para que ejecute el pipeline
+- Se crea un webhook en el repo de github para que cada vez que se cree un evento en el repo se notifique a jenkins para que ejecute el pipeline.
